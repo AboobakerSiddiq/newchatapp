@@ -21,9 +21,8 @@ function ChatArea() {
     const [values,setValues]=useState({
       messages:[]
   })
-  const {messages}=values
-     
-
+    const {messages}=values
+    
     const {name,error,success}=chats
     const timestamp = Date.now();
     const time=new Intl.DateTimeFormat('en-US', {hour: '2-digit', minute: '2-digit'}).format(timestamp)
@@ -39,7 +38,6 @@ function ChatArea() {
 
     useEffect(()=>{
       socket.current.emit("addUser",socket.id)
-      console.log(socket.id)
       socket.current.on("getUser",sockets=>{
           console.log(sockets)
       })
@@ -55,14 +53,11 @@ useEffect(()=>{
         setValues({...values,messages:data}) 
     })
     .catch(console.log("error"))
-    console.log(messages)
 },[])
 
     useEffect(()=>{
       socket.current.on("getMessage",text=>{
-       show.push(text)
-       console.log(show)
-       
+       setShow(text)
       })
     },[show])
     const onSubmit = e => {
@@ -109,7 +104,6 @@ useEffect(()=>{
                         )
                       })
                     }
-                     
                 </div>
             </div>
             </div>

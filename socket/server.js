@@ -10,6 +10,8 @@ const addUser=(socketId)=>{
 const removeUser=(socketId)=>{
   users=users.filter(user=>user.socketId !==socketId)
 }
+let chats=[];
+
 io.on("connection",(socket)=>{
   console.log("a user conected")
   io.emit("welcome","this is socket")
@@ -20,8 +22,9 @@ io.on("connection",(socket)=>{
 
   //send messages:
   socket.on("sendMessage",({text})=>{
-    console.log(text)
-    io.emit("getMessage",{text})
+    chats.push({text})
+    console.log(chats)
+    io.emit("getMessage",chats)
   })
   socket.on("disconnect",()=>{
     console.log("a user disconnected");
